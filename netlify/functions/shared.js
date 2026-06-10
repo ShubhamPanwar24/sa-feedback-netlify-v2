@@ -11,16 +11,23 @@ export const feedbackKey = 'feedback-submissions.json';
 export function response(statusCode, body, extraHeaders={}) {
   return { statusCode, headers: {...headers, ...extraHeaders}, body: typeof body === 'string' ? body : JSON.stringify(body) };
 }
-export function adminPinOk(event) {
+export function requireAdmin(event) {
   const expected = process.env.ADMIN_PIN || '1234';
   const pin = event.headers['x-admin-pin'] || event.headers['X-Admin-Pin'] || event.queryStringParameters?.pin || '';
-  return String(pin) === String(expected);
-}
-export function requireAdmin(event) {
-  if (!adminPinOk(event)) return response(401, { ok:false, error:'Invalid Admin PIN. Check Netlify Environment Variable ADMIN_PIN or use default 1234.' });
+  if (String(pin) !== String(expected)) return response(401, { ok:false, error:'Invalid Admin PIN. If ADMIN_PIN is not set in Netlify, default PIN is 1234.' });
   return null;
 }
-export function store() { return getStore({ name: 'sa-owner-feedback-admin-pin-fixed', consistency: 'strong' }); }
+export function store() { return getStore('sa-owner-feedback-compatible'); }
+export async function getJSON(key, fallback=[]) {
+  const s = store();
+  const txt = await s.get(key);
+  if (!txt) return fallback;
+  try { return JSON.parse(txt); } catch { return fallback; }
+}
+export async function setJSON(key, value) {
+  const s = store();
+  await s.set(key, JSON.stringify(value));
+}
 export function clean(v) { return String(v ?? '').trim().replace(/\s+/g, ' '); }
 export function idOf(r) { return clean(r['Appointment Number'] || r.AppointmentNumber || r['Work Order Number'] || r.WorkOrderNumber || `${r['Cluster ID']||r.ClusterID||''}|${r.PMAID||''}`); }
 export function normalizeTask(r, batchDate='') {
