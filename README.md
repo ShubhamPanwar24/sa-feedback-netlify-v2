@@ -1,16 +1,8 @@
-[README.md](https://github.com/user-attachments/files/28794742/README.md)
-# SA Owner Pending Feedback Portal - Admin PIN Fixed Version
+[README.md](https://github.com/user-attachments/files/28795186/README.md)
+# SA Feedback Netlify Admin PIN Compatible
 
-Admin PIN is enabled. SA Owner submission does not need PIN.
+This version fixes 502 risk by using compatible Netlify Blobs text get/set instead of setJSON/getJSON.
 
-Deploy settings:
-- Build command: npm run build
-- Publish directory: public
-- Functions directory: netlify/functions
+Set ADMIN_PIN in Netlify Environment Variables. If not set, default is 1234.
 
-Set Admin PIN in Netlify:
-Site configuration > Environment variables > Add ADMIN_PIN = your password
-Then redeploy. If not set, default PIN is 1234.
-
-Important:
-Deploy full repo/project with netlify/functions folder. Do not deploy only public/index.html.
+Deploy full project to Netlify. Do not upload only index.html.
