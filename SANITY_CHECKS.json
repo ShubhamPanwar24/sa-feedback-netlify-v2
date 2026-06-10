@@ -1,0 +1,8 @@
+{
+  "no_import_in_functions": true,
+  "exports_handler_present": true,
+  "package_has_no_type_module": true,
+  "admin_pin_ui_present": true,
+  "direct_functions_path_present": true,
+  "test_backend_present": true
+}
