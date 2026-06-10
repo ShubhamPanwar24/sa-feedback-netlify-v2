@@ -1,0 +1,8 @@
+{
+  "no_import": true,
+  "no_export": true,
+  "no_optional_chaining": true,
+  "no_nullish": true,
+  "has_exports_handler": true,
+  "no_type_module": true
+}

@@ -1,0 +1,11 @@
+{
+  "name": "sa-feedback-netlify-ultra-stable-commonjs",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "echo Build complete"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^8.2.0"
+  }
+}
