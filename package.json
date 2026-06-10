@@ -1,0 +1,12 @@
+{
+  "name": "sa-feedback-netlify-recreated",
+  "version": "2.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "echo Build complete - static site in public"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^10.7.6"
+  }
+}
