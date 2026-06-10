@@ -11,12 +11,16 @@ export const feedbackKey = 'feedback-submissions.json';
 export function response(statusCode, body, extraHeaders={}) {
   return { statusCode, headers: {...headers, ...extraHeaders}, body: typeof body === 'string' ? body : JSON.stringify(body) };
 }
-export function checkAdmin(event) {
-  const required = process.env.ADMIN_PIN || '1234';
+export function adminPinOk(event) {
+  const expected = process.env.ADMIN_PIN || '1234';
   const pin = event.headers['x-admin-pin'] || event.headers['X-Admin-Pin'] || event.queryStringParameters?.pin || '';
-  return String(pin) === String(required);
+  return String(pin) === String(expected);
 }
-export function store() { return getStore({ name: 'sa-owner-feedback', consistency: 'strong' }); }
+export function requireAdmin(event) {
+  if (!adminPinOk(event)) return response(401, { ok:false, error:'Invalid Admin PIN. Check Netlify Environment Variable ADMIN_PIN or use default 1234.' });
+  return null;
+}
+export function store() { return getStore({ name: 'sa-owner-feedback-admin-pin-fixed', consistency: 'strong' }); }
 export function clean(v) { return String(v ?? '').trim().replace(/\s+/g, ' '); }
 export function idOf(r) { return clean(r['Appointment Number'] || r.AppointmentNumber || r['Work Order Number'] || r.WorkOrderNumber || `${r['Cluster ID']||r.ClusterID||''}|${r.PMAID||''}`); }
 export function normalizeTask(r, batchDate='') {
