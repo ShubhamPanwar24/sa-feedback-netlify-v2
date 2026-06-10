@@ -1,7 +1,0 @@
-{
-  "version": "final-commonjs-admin-pin",
-  "no_import_in_functions": true,
-  "no_type_module": true,
-  "admin_pin": "enabled for admin actions",
-  "sa_owner_pin": "not required"
-}
